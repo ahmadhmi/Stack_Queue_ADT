@@ -35,9 +35,31 @@ public interface StackADT <T> {
      * Accessor method to return the last element of the stack
      * */
     void peek();
+
+    /**
+     * Removes and returns the topmost element of the stack
+     * @return T Element
+     */
     T pop();
+
+    /**
+     *Traverses the stack looking for the object provided and returns its index within the stack
+     * @param data
+     * @return int
+     */
     int search(T data);
+
+    /**
+     * Returns true if the stack is empty and false if otherwise
+     * @return boolean
+     */
     boolean empty();
+
+    /**
+     * Returns true if the stack is full and is unable to accept new elements,
+     * false if otherwise
+     * @return boolean
+     */
     boolean isFull();
 
 }
