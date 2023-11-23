@@ -1,49 +1,70 @@
 package org.example;
 
-public class MyQueue implements QueueADT{
-    @Override
-    public void enqueue(Object toAdd) throws NullPointerException {
+public class MyQueue<E> implements QueueADT<E>{
+    MyDLL<E> dll = new MyDLL<>();
 
+    @Override
+    public void enqueue(E toAdd) throws NullPointerException {
+        if (toAdd == null)
+            throw new NullPointerException("The given value is null");
+        dll.add(toAdd);
     }
 
     @Override
-    public Object dequeue() throws EmptyQueueException {
-        return null;
+    public E dequeue() throws EmptyQueueException {
+        if (dll.isEmpty())
+            throw new EmptyQueueException("dequeue cannot be performed as queue is empty");
+
+        return dll.remove(0);
     }
 
     @Override
-    public Object peek() throws EmptyQueueException {
-        return null;
+    public E peek() throws EmptyQueueException {
+        if (dll.isEmpty())
+            throw new EmptyQueueException("peek cannot be performed as queue is empty");
+
+        return dll.get(0);
     }
 
     @Override
     public void dequeueAll() {
-
+        dll.clear();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return dll.isEmpty();
     }
 
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<E> iterator() {
+        return dll.iterator();
     }
 
     @Override
-    public boolean equals(QueueADT that) {
-        return false;
+    public boolean equals(QueueADT<E> that) {
+        if (that.size() != size())
+            return false;
+
+        Iterator<? extends E> thatIterator = that.iterator();
+        Iterator<? extends E> thisIterator = iterator();
+
+        while (thatIterator.hasNext()) {
+            if (thisIterator.next() != thatIterator.next())
+                return false;
+        }
+
+        return true;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return dll.toArray();
     }
 
     @Override
-    public Object[] toArray(Object[] holder) throws NullPointerException {
-        return new Object[0];
+    public E[] toArray(E[] holder) throws NullPointerException {
+        return dll.toArray(holder);
     }
 
     @Override
@@ -53,6 +74,6 @@ public class MyQueue implements QueueADT{
 
     @Override
     public int size() {
-        return 0;
+        return dll.size();
     }
 }
