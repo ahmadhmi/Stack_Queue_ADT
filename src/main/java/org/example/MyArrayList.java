@@ -91,14 +91,19 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public boolean addAll(ListADT toAdd) throws NullPointerException {
+
         while ((size + toAdd.size()) >= max)
         {
             expand();
         }
 
-        for()
-
-
+        int count = 0;
+        for(int i = size; i < size + toAdd.size(); i++, count++)
+        {
+            data[i] = (E) toAdd.get(count);
+        }
+        size += toAdd.size();
+        return true;
     }
 
     @Override
@@ -112,12 +117,33 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public Object remove(int index) throws IndexOutOfBoundsException {
-        return null;
+        if (index < 0 || index >= max)
+            throw  new IndexOutOfBoundsException("Index greater than maximum size of the array");
+
+        for(int i = index; i < size; i++)
+            data[i] = data[i+1];
+        size--;
+        return true;
     }
 
     @Override
     public Object remove(Object toRemove) throws NullPointerException {
-        return null;
+
+        int indexof = indexOf(toRemove);
+        remove(indexof);
+        return true;
+
+    }
+
+    public int indexOf(Object target)
+    {
+        int indexof = 0;
+        for (int i = 0; i < size; i++)
+            if (data[i].equals(target)){
+                indexof = i;
+                break;
+            }
+        return indexof;
     }
 
     @Override
