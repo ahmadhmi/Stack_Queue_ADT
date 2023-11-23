@@ -3,14 +3,12 @@ public class MyArrayList <E> implements ListADT {
 
     private int size;
     private E[] data;
-    private int pointer;
     private int max;
 
     public MyArrayList(int size)
     {
         this.max = size;
         this.size = 0;
-        this.pointer = 0;
         data = (E[]) new Object[size];
     }
 
@@ -45,7 +43,7 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public void clear() {
-        this.pointer = 0;
+        this.size = 0;
     }
 
     @Override
@@ -148,16 +146,35 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public Object set(int index, Object toChange) throws NullPointerException, IndexOutOfBoundsException {
-        return null;
+
+        if (index < 0 || index >= max)
+            throw  new IndexOutOfBoundsException("Index greater than maximum size of the array");
+
+        for( int i = 0; i < size ; i++)
+            if (i == index)
+            {
+                data[i] = (E) toChange;
+                break;
+            }
+        return true;
+
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size < 0) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean contains(Object toFind) throws NullPointerException {
+        for( int i = 0;i < size; i++)
+            if(data[i] == toFind)
+            {
+                return true;
+            }
         return false;
     }
 
