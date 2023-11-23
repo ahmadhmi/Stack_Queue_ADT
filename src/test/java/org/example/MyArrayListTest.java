@@ -120,7 +120,8 @@ public class MyArrayListTest {
 
     @Test
     public void testToArray() {
-        Object[] arr = list.toArray(new Integer[3]);
+        Integer[] arr = new Integer[6];
+        list.toArray(arr);
         assertEquals(arr.length, list.size());
         for (int i = 0; i < arr.length; i++)
         {

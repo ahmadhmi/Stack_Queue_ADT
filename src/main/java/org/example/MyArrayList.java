@@ -178,7 +178,7 @@ public class MyArrayList<E> implements ListADT<E>{
     @Override
     public E[] toArray(E[] toHold) throws NullPointerException {
         E[] used;
-        if (toHold.length <= size)
+        if (toHold.length < size)
             used = (E[]) new Object[size];
         else
             used = toHold;
