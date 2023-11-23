@@ -9,14 +9,34 @@ public class MyArrayList <E> implements ListADT {
     public MyArrayList(int size)
     {
         this.max = size;
+        this.size = 0;
+        this.pointer = 0;
         data = (E[]) new Object[size];
     }
 
     public MyArrayList()
     {
         this.max = 100;
-        data = (E[]) new Object[size];
+        data = (E[]) new Object[max];
     }
+
+    private void expand()
+    {
+        // doubling the size and creating a new array
+        this.max *= 2;
+        E[] newData = (E[]) new Object[this.max];
+
+        // copying elements over
+        for (int i = 0; i < this.data.length; i++)
+        {
+            newData[i] = data[i];
+        }
+
+        //replacing data with new data
+        this.data = newData;
+
+    }
+
 
     @Override
     public int size() {
@@ -25,27 +45,69 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public void clear() {
-
+        this.pointer = 0;
     }
 
     @Override
     public boolean add(int index, Object toAdd) throws NullPointerException, IndexOutOfBoundsException {
-        return false;
+
+        if (size >= max)
+        {
+            expand();
+        }
+
+        if (index >= max)
+        {
+            throw new IndexOutOfBoundsException("Index greater than maximum size of the array");
+        }
+
+        if (index <= size)
+        {
+            //move data[index + 1...size] one space to the right
+            E temp;
+            for(int i = size - 1; i >= index; i--)
+            {
+                data[i + 1] = data[i];
+            }
+        }
+
+        data[index] = (E) toAdd;
+        size++;
+
+        return true;
     }
 
     @Override
     public boolean add(Object toAdd) throws NullPointerException {
-        return false;
+        if (size >= max)
+        {
+            expand();
+        }
+
+        data[size] = (E) toAdd;
+        size++;
+        return true;
     }
 
     @Override
     public boolean addAll(ListADT toAdd) throws NullPointerException {
-        return false;
+        while ((size + toAdd.size()) >= max)
+        {
+            expand();
+        }
+
+        for()
+
+
     }
 
     @Override
     public Object get(int index) throws IndexOutOfBoundsException {
-        return null;
+        if (index >= size)
+        {
+            throw new IndexOutOfBoundsException("Index greater than maximum size of the array");
+        }
+        return data[index];
     }
 
     @Override
@@ -80,7 +142,13 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] arr = new Object[size];
+        for(int i = 0; i < size; i++)
+        {
+            arr[i] = data[i];
+        }
+
+        return arr;
     }
 
     @Override
