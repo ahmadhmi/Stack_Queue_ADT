@@ -172,13 +172,11 @@ public class MyDLLTest {
     @Test
     public void iterator() {
 
-        MyDLL<Integer> dll = new MyDLL<>();
+        test.add(1);
+        test.add(2);
+        test.add(3);
 
-        dll.add(1);
-        dll.add(2);
-        dll.add(3);
-
-        Iterator<Integer> it = dll.iterator();
+        Iterator<Integer> it = test.iterator();
 
         assertTrue("Iterator should have next element", it.hasNext());
         assertEquals("First element should be 1", Integer.valueOf(1), it.next());

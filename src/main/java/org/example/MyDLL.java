@@ -73,6 +73,7 @@ public class MyDLL<E> implements ListADT<E> {
         if (head == null){
             head = tail = node;
         }
+
         else {
             MyDLLNode<E> temp;
             temp = tail;
@@ -135,9 +136,15 @@ public class MyDLL<E> implements ListADT<E> {
         MyDLLNode<E> node = new MyDLLNode<>();
 
         if (index == 0){
-            node.value = head.value;
-            head = head.next;
-            head.previous = null;
+            if (size == 1){
+                node.value = head.value;
+                head = tail = null;
+            }
+            else{
+                node.value = head.value;
+                head = head.next;
+                head.previous = null;
+            }
         }
         else if (index == size - 1){
             node.value = tail.value;
