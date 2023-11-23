@@ -67,8 +67,8 @@ public class MyStackTest {
     @Test
     public void testToArray() {
         Integer[] temp = new Integer[6];
-        Integer[] holder=test.toArray(temp);
-        assertEquals(holder.length,6);
+        test.toArray(temp);
+        assertEquals(temp.length,6);
     }
 
     @Test
@@ -86,9 +86,9 @@ public class MyStackTest {
     @Test
     public void iterator() {
         boolean result = true;
-        Integer[] test2 = new Integer[4];
-        Integer[] holder=test.toArray(test2);
-        for(int i =0 ; i<test.size();i++){
+        Integer[] holder = new Integer[5];
+        test.toArray(holder);
+        for(int i = test.size() - 1; i >= 0; i--){
             if (holder[i] != test.pop()) {
                 result = false;
             }
