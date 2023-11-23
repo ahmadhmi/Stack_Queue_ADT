@@ -13,51 +13,43 @@ public class MyArrayListTest {
     @Before
     public void setup()
     {
-        list = new MyArrayList<>();
+        list = new MyArrayList<Integer>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
     }
 
 
     @Test
     public void size() {
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        assertEquals(3, list.size());
+        assertEquals(6, list.size());
     }
 
     @Test
     public void clear() {
+        list.clear();
+        assertEquals(list.size(), 0);
     }
 
     @Test
     public void add() {
         list.add(2);
-        assertEquals(list.get(0), 2);
+        assertEquals((long) list.get(list.size() - 1), 2);
     }
 
     @Test
     public void testAdd() {
-        list.add(2);
-        assertEquals(list.get(0), 2);
-        list.add(0, 1);
-        for(int i = 0; i < list.size(); i++)
-        {
-            assertEquals(list.get(i), i + 1);
-        }
+        list.add(3, 1);
+        assertEquals((long) list.get(3), 1);
     }
 
     @Test
     public void addAll() {
 
-        list = new MyArrayList<>(3);
         MyArrayList<Integer> list2 = new MyArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        list2.add(4);
-        list2.add(5);
-        list2.add(6);
         list2.add(7);
         list2.add(8);
         list2.add(9);
@@ -66,39 +58,32 @@ public class MyArrayListTest {
 
         for(int i = 0; i < list.size(); i++)
         {
-            assertEquals(list.get(i), i + 1);
+            assertEquals((long) list.get(i), i + 1);
         }
     }
 
     @Test
     public void get() {
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        assertEquals(list.get(1), 2);
+        assertEquals((long) list.get(1), 2);
     }
 
     @Test
     public void remove() {
-        list.add(1);
-        list.add(2);
-        list.add(3);
         list.remove(1);
-        assertEquals(list.get(1), 3);
-        assertEquals(list.size(), 2);
+        assertEquals((long) list.get(1), 3);
+        assertEquals(list.size(), 5);
     }
 
     @Test
     public void testRemove() {
+        list.remove((Integer) 1);
+        assertEquals((long) list.get(0), 2);
+        assertEquals(list.size(), 5);
     }
 
     @Test
     public void set() {
         MyArrayList<Integer> list2 = new MyArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
         list2.add(4);
         list2.add(5);
         list2.add(6);
@@ -107,7 +92,7 @@ public class MyArrayListTest {
         list.addAll(list2);
 
         list.set(3, 100);
-        assertEquals(list.get(3), 100);
+        assertEquals((long) list.get(3), 100);
     }
 
     @Test
@@ -117,26 +102,47 @@ public class MyArrayListTest {
 
     @Test
     public void contains() {
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-        assertEquals(list.get(2), 3);
+
+        assertTrue(list.contains(2));
 
     }
 
     @Test
     public void toArray() {
+        Object[] arr = list.toArray();
+        assertEquals(arr.length, list.size());
+        for(int i = 0; i < arr.length; i++)
+        {
+            assertEquals(list.get(i), arr[i]);
+        }
+
     }
 
     @Test
     public void testToArray() {
+        Object[] arr = list.toArray(new Integer[3]);
+        assertEquals(arr.length, list.size());
+        for (int i = 0; i < arr.length; i++)
+        {
+            assertEquals(arr[i], list.get(i));
+        }
+
     }
 
     @Test
     public void iterator() {
+
+
+        Iterator<Integer> listIterator = list.iterator();
+
+        int counter = 0;
+        while(listIterator.hasNext())
+        {
+            assertEquals(list.get(counter), listIterator.next());
+            counter++;
+        }
+
+
     }
 
     @After
