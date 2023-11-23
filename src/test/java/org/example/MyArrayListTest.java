@@ -45,14 +45,40 @@ public class MyArrayListTest {
 
     @Test
     public void addAll() {
+
+        MyArrayList<Integer> list2 = new MyArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        list2.add(4);
+        list2.add(5);
+        list2.add(6);
+
+        list.addAll(list2);
+
+        for(int i = 0; i < list.size(); i++)
+        {
+            assertEquals(list.get(i), i + 1);
+        }
     }
 
     @Test
     public void get() {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertEquals(list.get(1), 2);
     }
 
     @Test
     public void remove() {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.remove(1);
+        assertEquals(list.get(1), 3);
+        assertEquals(list.size(), 2);
     }
 
     @Test
