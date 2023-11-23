@@ -1,6 +1,13 @@
 package org.example;
 
-public class MyDLL implements ListADT {
+public class MyDLL<E> implements ListADT {
+    private MyDLLNode<E> head;
+    private MyDLLNode<E> tail;
+    private int size;
+    public MyDLL(){
+        this.head = this.tail = null;
+    }
+
     @Override
     public int size() {
         return 0;
