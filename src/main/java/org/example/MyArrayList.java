@@ -1,5 +1,5 @@
 package org.example;
-public class MyArrayList <E> implements ListADT {
+public class MyArrayList<E> implements ListADT<E>{
 
     private int size;
     private E[] data;
@@ -88,7 +88,7 @@ public class MyArrayList <E> implements ListADT {
     }
 
     @Override
-    public boolean addAll(ListADT toAdd) throws NullPointerException {
+    public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
 
         while ((size + toAdd.size()) >= max)
         {
@@ -98,14 +98,14 @@ public class MyArrayList <E> implements ListADT {
         int count = 0;
         for(int i = size; i < size + toAdd.size(); i++, count++)
         {
-            data[i] = (E) toAdd.get(count);
+            data[i] = toAdd.get(count);
         }
         size += toAdd.size();
         return true;
     }
 
     @Override
-    public Object get(int index) throws IndexOutOfBoundsException {
+    public E get(int index) throws IndexOutOfBoundsException {
         if (index >= size)
         {
             throw new IndexOutOfBoundsException("Index greater than maximum size of the array");
@@ -114,28 +114,29 @@ public class MyArrayList <E> implements ListADT {
     }
 
     @Override
-    public Object remove(int index) throws IndexOutOfBoundsException {
+    public E remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= max)
             throw  new IndexOutOfBoundsException("Index greater than maximum size of the array");
+
+        E remove = data[index];
 
         for(int i = index; i < size; i++)
             data[i] = data[i+1];
         size--;
-        return true;
+        return remove;
     }
 
     @Override
-    public Object remove(Object toRemove) throws NullPointerException {
+    public E remove(E toRemove) throws NullPointerException {
 
-        int indexof = indexOf(toRemove);
-        remove(indexof);
-        return true;
+        int index = indexOf(toRemove);
+        return remove(index);
 
     }
 
-    public int indexOf(Object target)
+    public int indexOf(E target)
     {
-        int indexof = 0;
+        int indexof = -1;
         for (int i = 0; i < size; i++)
             if (data[i].equals(target)){
                 indexof = i;
@@ -145,18 +146,14 @@ public class MyArrayList <E> implements ListADT {
     }
 
     @Override
-    public Object set(int index, Object toChange) throws NullPointerException, IndexOutOfBoundsException {
+    public E set(int index, E toChange) throws NullPointerException, IndexOutOfBoundsException {
 
         if (index < 0 || index >= max)
             throw  new IndexOutOfBoundsException("Index greater than maximum size of the array");
 
-        for( int i = 0; i < size ; i++)
-            if (i == index)
-            {
-                data[i] = (E) toChange;
-                break;
-            }
-        return true;
+        E occupant = data[index];
+        data[index] = toChange;
+        return occupant;
 
     }
 
@@ -169,9 +166,9 @@ public class MyArrayList <E> implements ListADT {
     }
 
     @Override
-    public boolean contains(Object toFind) throws NullPointerException {
+    public boolean contains(E toFind) throws NullPointerException {
         for( int i = 0;i < size; i++)
-            if(data[i] == toFind)
+            if(data[i].equals(toFind))
             {
                 return true;
             }
@@ -179,15 +176,25 @@ public class MyArrayList <E> implements ListADT {
     }
 
     @Override
-    public Object[] toArray(Object[] toHold) throws NullPointerException {
-        return new Object[0];
+    public E[] toArray(E[] toHold) throws NullPointerException {
+        E[] used;
+        if (toHold.length <= size)
+            used = (E[]) new Object[size];
+        else
+            used = toHold;
+
+        for(int i = 0; i < size; i++)
+        {
+            used[i] = data[i];
+        }
+
+        return used;
     }
 
     @Override
-    public Object[] toArray() {
-        Object[] arr = new Object[size];
-        for(int i = 0; i < size; i++)
-        {
+    public E[] toArray() {
+        E[] arr = (E[]) new Object[size];
+        for (int i = 0; i < size; i++) {
             arr[i] = data[i];
         }
 
@@ -196,6 +203,7 @@ public class MyArrayList <E> implements ListADT {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new MyArrayListIterator<>(this);
     }
+
 }
