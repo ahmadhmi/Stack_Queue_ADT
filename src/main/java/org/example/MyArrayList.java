@@ -1,9 +1,26 @@
-package main.java.org.example;
-
+package org.example;
 public class MyArrayList <E> implements ListADT {
+
+    private int size;
+    private E[] data;
+    private int pointer;
+    private int max;
+
+    public MyArrayList(int size)
+    {
+        this.max = size;
+        data = (E[]) new Object[size];
+    }
+
+    public MyArrayList()
+    {
+        this.max = 100;
+        data = (E[]) new Object[size];
+    }
+
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
