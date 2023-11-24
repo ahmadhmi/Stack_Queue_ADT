@@ -112,7 +112,7 @@ public class MyDLLTest {
         testString.add(1, "1");
         testString.add(2, "20");
         testString.add(3, "3");
-        String toRemove = testString.remove("5");
+        String toRemove = testString.remove("10");
         assertEquals("10", toRemove);
     }
 
